@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "dialogduotts"
 version = "0.1.0"
-description = "A Python project that converts text dialogues to speech"
+description = "A Python project that converts text dialogues to speech using offline TTS"
 authors = ["Your Name <your.email@example.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-gtts = "^2.4.0"
+edge-tts = "^6.1.9"
 pydub = "^0.25.1"
 
 [build-system]

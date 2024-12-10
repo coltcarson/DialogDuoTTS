@@ -1,26 +1,36 @@
 #!/usr/bin/env python3
 import os
+import asyncio
 import tempfile
-from gtts import gTTS
+import edge_tts
 from pydub import AudioSegment
 
 class DialogueToSpeech:
     def __init__(self):
-        # Define different languages/accents for each speaker
-        self.voice_a = {'lang': 'en', 'tld': 'com'}  # US English
-        self.voice_b = {'lang': 'en', 'tld': 'co.uk'}  # UK English
+        """Initialize TTS with different voices"""
+        # Select voices for each speaker
+        self.voice_a = "en-US-JennyNeural"  # Female voice
+        self.voice_b = "en-US-ChristopherNeural"  # Male voice
+        
+        # Create output directory if it doesn't exist
+        os.makedirs("output", exist_ok=True)
+        
+        print("TTS initialized successfully!")
 
-    def create_audio_for_line(self, text, voice_params, output_path):
+    async def create_audio_for_line(self, text, speaker, output_path):
         """Generate audio file for a single line of dialogue"""
-        tts = gTTS(text=text, lang=voice_params['lang'], tld=voice_params['tld'])
-        tts.save(output_path)
+        voice = self.voice_a if speaker == "PersonA" else self.voice_b
+        communicate = edge_tts.Communicate(text, voice)
+        await communicate.save(output_path)
 
-    def process_conversation(self, input_file, output_file):
+    async def process_conversation(self, input_file, output_file):
         """Process the entire conversation and create the final audio file"""
         # Create a temporary directory for intermediate files
         with tempfile.TemporaryDirectory() as temp_dir:
             combined_audio = None
             silence = AudioSegment.silent(duration=500)  # 500ms silence between lines
+            
+            print("Processing conversation...")
             
             # Read and process each line of the conversation
             with open(input_file, 'r') as f:
@@ -31,14 +41,12 @@ class DialogueToSpeech:
                     # Split the line into speaker and text
                     speaker, text = line.strip().split(':', 1)
                     text = text.strip()
-                    
-                    # Determine which voice to use
-                    voice_params = self.voice_a if speaker.strip() == 'PersonA' else self.voice_b
+                    speaker = speaker.strip()
                     
                     # Generate temporary audio file for this line
                     temp_audio_path = os.path.join(temp_dir, f'line_{i}.mp3')
-                    print(f"Generating audio for: {text}")
-                    self.create_audio_for_line(text, voice_params, temp_audio_path)
+                    print(f"Generating audio for {speaker}: {text}")
+                    await self.create_audio_for_line(text, speaker, temp_audio_path)
                     
                     # Load the audio segment
                     audio_segment = AudioSegment.from_mp3(temp_audio_path)
@@ -49,24 +57,31 @@ class DialogueToSpeech:
                     else:
                         combined_audio = combined_audio + silence + audio_segment
 
-            # Ensure output directory exists
-            os.makedirs(os.path.dirname(output_file), exist_ok=True)
-            
             # Export the final audio file
             if combined_audio:
                 combined_audio.export(output_file, format='wav')
-                print(f"Successfully created dialogue audio file: {output_file}")
+                print(f"\nSuccess! Created dialogue audio file: {output_file}")
             else:
                 print("No dialogue was processed. Check if the input file is empty or formatted correctly.")
 
-def main():
-    # Define file paths
-    input_file = 'data/conversation.txt'
-    output_file = 'output/final_conversation.wav'
-    
-    # Create and run the converter
-    converter = DialogueToSpeech()
-    converter.process_conversation(input_file, output_file)
+async def main():
+    try:
+        # Define file paths
+        input_file = 'data/conversation.txt'
+        output_file = 'output/final_conversation.wav'
+        
+        print("\nInitializing Text-to-Speech...")
+        
+        # Create and run the converter
+        converter = DialogueToSpeech()
+        await converter.process_conversation(input_file, output_file)
+        
+    except Exception as e:
+        print(f"\nError: {str(e)}")
+        print("\nTroubleshooting tips:")
+        print("1. Make sure you have run 'poetry install' to install all dependencies")
+        print("2. Ensure the 'data' directory contains a valid conversation.txt file")
+        print("3. Check that you have sufficient disk space")
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
