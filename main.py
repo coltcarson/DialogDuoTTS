@@ -1,67 +1,49 @@
 #!/usr/bin/env python3
 import os
 import tempfile
-import subprocess
+import platform
+from TTS.api import TTS
 from pydub import AudioSegment
 
 class DialogueToSpeech:
     def __init__(self):
         """Initialize TTS with different voices"""
-        # Check if espeak is installed and get its path
-        try:
-            # On macOS with Homebrew, espeak is typically installed here
-            if os.path.exists('/opt/homebrew/bin/espeak'):
-                self.espeak_path = '/opt/homebrew/bin/espeak'
-            else:
-                # Try to find espeak in PATH
-                result = subprocess.run(['which', 'espeak'], capture_output=True, text=True)
-                if result.returncode == 0:
-                    self.espeak_path = result.stdout.strip()
-                else:
-                    raise FileNotFoundError("espeak not found in PATH")
-            
-            # Test espeak
-            subprocess.run([self.espeak_path, '--version'], capture_output=True, check=True)
-            print("TTS initialized successfully!")
-        except (subprocess.CalledProcessError, FileNotFoundError) as e:
-            raise RuntimeError("espeak not found. Please install it using 'brew install espeak'") from e
+        # Initialize TTS engines for different voices
+        print("\nInitializing Text-to-Speech...")
+        print("This may take a moment to download the voice models on first run.")
         
-        # Configure voices for each speaker
-        self.voice_a = {
-            'voice': 'en-us',  # US English
-            'pitch': 50,       # Default pitch
-            'speed': 150       # Words per minute
-        }
-        self.voice_b = {
-            'voice': 'en-gb',  # British English
-            'pitch': 30,       # Lower pitch for contrast
-            'speed': 150       # Words per minute
-        }
+        # Initialize male voice (VCTK model with p273 speaker - male British accent)
+        self.male_tts = TTS(model_name="tts_models/en/vctk/vits", progress_bar=True)
+        self.male_speaker = "p273"  # VCTK male speaker
+        
+        # Initialize female voice (VCTK model with p262 speaker - female American accent)
+        self.female_tts = TTS(model_name="tts_models/en/vctk/vits", progress_bar=True)
+        self.female_speaker = "p262"  # VCTK female speaker
         
         # Create output directory if it doesn't exist
         os.makedirs("output", exist_ok=True)
+        
+        print("\nTTS initialized successfully!")
+        print(f"Using voices:")
+        print(f"PersonA: Male British voice (VCTK p273)")
+        print(f"PersonB: Female American voice (VCTK p262)")
 
     def create_audio_for_line(self, text, speaker, output_path):
         """Generate audio file for a single line of dialogue"""
-        # Select voice configuration
-        voice_config = self.voice_a if speaker == "PersonA" else self.voice_b
+        # Select TTS engine and speaker based on the speaker
+        if speaker == "PersonA":
+            tts = self.male_tts
+            speaker_id = self.male_speaker
+        else:
+            tts = self.female_tts
+            speaker_id = self.female_speaker
         
-        # Build espeak command
-        cmd = [
-            self.espeak_path,
-            '-v', voice_config['voice'],
-            '-p', str(voice_config['pitch']),
-            '-s', str(voice_config['speed']),
-            '-w', output_path,  # Write to WAV file
-            text
-        ]
-        
-        # Run espeak command
-        try:
-            subprocess.run(cmd, check=True, capture_output=True, text=True)
-        except subprocess.CalledProcessError as e:
-            print(f"Error running espeak: {e.stderr}")
-            raise
+        # Generate audio
+        tts.tts_to_file(
+            text=text,
+            speaker=speaker_id,
+            file_path=output_path
+        )
 
     def process_conversation(self, input_file, output_file):
         """Process the entire conversation and create the final audio file"""
@@ -70,7 +52,7 @@ class DialogueToSpeech:
             combined_audio = None
             silence = AudioSegment.silent(duration=500)  # 500ms silence between lines
             
-            print("Processing conversation...")
+            print("\nProcessing conversation...")
             
             # Read and process each line of the conversation
             with open(input_file, 'r') as f:
@@ -111,6 +93,8 @@ def main():
         output_file = 'output/final_conversation.wav'
         
         print("\nInitializing Text-to-Speech...")
+        print(f"System: {platform.system()}")
+        print(f"Python: {platform.python_version()}")
         
         # Create and run the converter
         converter = DialogueToSpeech()
@@ -121,10 +105,8 @@ def main():
         print("\nTroubleshooting tips:")
         print("1. Make sure you have run 'poetry install' to install all dependencies")
         print("2. Ensure the 'data' directory contains a valid conversation.txt file")
-        print("3. Check that espeak is installed on your system:")
-        print("   - macOS: brew install espeak")
-        print("   - Linux: sudo apt-get install espeak")
-        print("   - Windows: Download from https://github.com/espeak/espeak/releases")
+        print("3. If this is your first run, the script needs to download voice models")
+        print("   This may take a few minutes depending on your internet connection")
 
 if __name__ == "__main__":
     main()

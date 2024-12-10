@@ -1,11 +1,11 @@
 # DialogDuoTTS
 
-A Python-based text-to-speech application that converts two-person dialogues into natural-sounding conversations using offline TTS models.
+A Python-based text-to-speech application that converts two-person dialogues into conversations using offline TTS.
 
 ## Features
 
 - Works completely offline - no internet connection required
-- Uses high-quality Mozilla TTS models for natural-sounding voices
+- Uses high-quality offline TTS models for natural-sounding voices
 - Different voices for each speaker
 - Cross-platform support (Windows, macOS, Linux)
 - Automatic handling of conversation turn-taking with appropriate pauses
@@ -14,6 +14,22 @@ A Python-based text-to-speech application that converts two-person dialogues int
 
 - Python 3.10 or higher
 - Poetry (Python package manager)
+- espeak-ng (Text-to-Speech engine)
+
+### Installing espeak-ng
+
+- **macOS**:
+  ```bash
+  brew install espeak
+  ```
+
+- **Linux**:
+  ```bash
+  sudo apt-get install espeak-ng
+  ```
+
+- **Windows**:
+  Download the installer from [espeak-ng releases](https://github.com/espeak-ng/espeak-ng/releases)
 
 ## Installation
 
@@ -27,8 +43,6 @@ A Python-based text-to-speech application that converts two-person dialogues int
    ```bash
    poetry install
    ```
-
-   Note: The first run will download the TTS models (approximately 1GB total).
 
 ## Usage
 
@@ -53,24 +67,27 @@ A Python-based text-to-speech application that converts two-person dialogues int
 - `output/`: Directory for generated audio files
 - `pyproject.toml`: Project dependencies and configuration
 
+## Voice Configuration
+
+The script uses two different voices:
+- PersonA: US English, default pitch
+- PersonB: British English, slightly lower pitch
+
+You can modify the voice settings in the `DialogueToSpeech.__init__` method:
+- `voice`: Language/accent (e.g., 'en-us', 'en-gb')
+- `pitch`: Voice pitch (0-99)
+- `speed`: Speaking rate in words per minute
+
 ## Troubleshooting
 
-1. If you encounter memory issues:
-   - Close other applications
-   - Ensure you have at least 4GB of free RAM
+1. If you get an error about espeak-ng not being found:
+   - Make sure you've installed espeak-ng using the instructions above
+   - On Windows, ensure the espeak-ng installation directory is in your PATH
 
-2. If you get model loading errors:
-   - Delete the cached models in ~/.cache/torch/hub/ (Linux/Mac) or %USERPROFILE%/.cache/torch/hub/ (Windows)
-   - Run the script again to redownload the models
+2. If the audio quality isn't satisfactory:
+   - Try adjusting the pitch and speed settings in the voice configuration
+   - Different voices may sound better for different types of text
 
-3. For audio playback issues:
-   - Ensure your system's audio output is properly configured
-   - Try playing the output file with VLC or another media player
-
-## Technical Details
-
-- Uses Mozilla TTS for speech synthesis
-- PersonA uses the LJSpeech model (female voice)
-- PersonB uses the VCTK model with speaker p335 (male voice)
-- Audio files are generated in WAV format
-- 500ms pause between dialogue turns
+3. If you get permission errors:
+   - Ensure you have write permissions in the output directory
+   - Try running the script with appropriate permissions
