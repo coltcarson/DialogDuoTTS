@@ -1,0 +1,5 @@
+PersonA: Hello, how are you today?
+PersonB: I'm doing well, thanks for asking! How about yourself?
+PersonA: I'm great! The weather is beautiful today.
+PersonB: Yes, it's perfect for a walk in the park.
+PersonA: We should definitely take advantage of it!

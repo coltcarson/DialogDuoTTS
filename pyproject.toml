@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "dialogduotts"
+version = "0.1.0"
+description = "A Python project that converts text dialogues to speech"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+gtts = "^2.4.0"
+pydub = "^0.25.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
