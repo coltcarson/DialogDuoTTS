@@ -210,20 +210,13 @@ poetry run mypy .
 5. Ensure all pre-commit hooks pass
 6. Submit a pull request
 
-## 📄 License
+## 📜 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-The VITS TTS model used in this project is licensed under the Apache 2.0 License.
-- **Model Author**: Eren @erogol (egolge@coqui.ai)
-- **Model Version**: v0.6.1
-- **Dataset**: VCTK (Voice Cloning Toolkit)
-- For more information about the model, visit the [Coqui TTS Models Repository](https://github.com/coqui-ai/TTS/blob/dev/TTS/.models.json)
+The project uses the Coqui TTS VITS model which is licensed under the Apache 2.0 License. For more information about the model license, visit the [Coqui TTS Models page](https://github.com/coqui-ai/TTS/blob/dev/TTS/.models.json).
 
 ---
 
 <div align="center">
 Made with ❤️ using Coqui TTS
-
-Powered by [Coqui TTS](https://github.com/coqui-ai/TTS)
-</div>
