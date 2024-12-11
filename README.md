@@ -18,6 +18,11 @@
 - **Model Size**: ~100MB per voice model
 - **Quality**: High-quality neural TTS with natural-sounding voices
 - **Language**: English (with British and American accents)
+- **Speakers**: 109 different speakers with various English accents
+- **License**: Apache 2.0
+- **Author**: Eren @erogol (egolge@coqui.ai)
+- **Model Version**: v0.6.1
+- **Source**: [Coqui TTS Models Repository](https://github.com/coqui-ai/TTS/blob/dev/TTS/.models.json)
 
 ### Included Voices
 1. **PersonA - Male British Voice**
@@ -166,7 +171,13 @@ poetry run mypy .
 
 ## 📄 License
 
-[Add your license information here]
+This project is licensed under the MIT License.
+
+The VITS TTS model used in this project is licensed under the Apache 2.0 License.
+- **Model Author**: Eren @erogol (egolge@coqui.ai)
+- **Model Version**: v0.6.1
+- **Dataset**: VCTK (Voice Cloning Toolkit)
+- For more information about the model, visit the [Coqui TTS Models Repository](https://github.com/coqui-ai/TTS/blob/dev/TTS/.models.json)
 
 ---
 
