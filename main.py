@@ -6,10 +6,12 @@ different voices for different speakers. It uses the Coqui TTS library for high-
 offline text-to-speech synthesis.
 """
 
+import argparse
 import contextlib
 import io
 import os
 import platform
+import sys
 import tempfile
 import warnings
 from datetime import datetime
@@ -221,10 +223,31 @@ class DialogueToSpeech:
 
 
 def main() -> None:
-    """Convert a sample conversation text file into an audio dialogue."""
+    """Convert a text dialogue file into an audio dialogue."""
     try:
-        # Define input file path
-        input_file = "data/conversation.txt"
+        # Parse command line arguments
+        parser = argparse.ArgumentParser(
+            description="Convert text dialogues into audio files using different voices."
+        )
+        parser.add_argument(
+            "-i",
+            "--input",
+            type=str,
+            default="data/project_podcast.txt",
+            help="Input text file containing the dialogue (default: data/project_podcast.txt)",
+        )
+        parser.add_argument(
+            "-v",
+            "--verbose",
+            action="store_true",
+            help="Enable verbose output",
+        )
+        args = parser.parse_args()
+
+        # Check if input file exists
+        if not os.path.exists(args.input):
+            print(f"Error: Input file '{args.input}' not found!")
+            sys.exit(1)
 
         print("\nInitializing Text-to-Speech...")
         print(f"System: {platform.system()}")
@@ -232,7 +255,7 @@ def main() -> None:
 
         # Create and run the converter
         converter = DialogueToSpeech()
-        output_file = converter.process_conversation(input_file)
+        output_file = converter.process_conversation(args.input)
         if not output_file:
             raise RuntimeError("Failed to process conversation")
 
@@ -240,7 +263,7 @@ def main() -> None:
         print(f"\nError: {str(e)}")
         print("\nTroubleshooting tips:")
         print('1. Make sure you have run "poetry install" to install all dependencies')
-        print('2. Ensure the "data" directory contains a valid conversation.txt file')
+        print("2. Ensure the input file exists and is properly formatted")
         print(
             "3. If this is your first run, the script needs to download voice models.\n"
             "This may take a few minutes depending on your connection"
