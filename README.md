@@ -10,6 +10,47 @@
 - ⚡ Automatic handling of conversation turn-taking with appropriate pauses
 - 🛡️ Type-checked and well-tested codebase with comprehensive quality checks
 
+## 🎙️ Voice Models
+
+### Model Details
+- **Model Type**: VITS (Conditional Variational Autoencoder with Adversarial Learning)
+- **Dataset**: VCTK (Voice Cloning Toolkit)
+- **Model Size**: ~100MB per voice model
+- **Quality**: High-quality neural TTS with natural-sounding voices
+- **Language**: English (with British and American accents)
+- **Speakers**: 109 different speakers with various English accents
+- **License**: Apache 2.0
+- **Author**: Eren @erogol (egolge@coqui.ai)
+- **Model Version**: v0.6.1
+- **Source**: [Coqui TTS Models Repository](https://github.com/coqui-ai/TTS/blob/dev/TTS/.models.json)
+
+### Included Voices
+1. **PersonA - Male British Voice**
+   - Model: `tts_models/en/vctk/vits`
+   - Speaker ID: `p273`
+   - Accent: British English
+   - Characteristics: Clear, professional male voice
+
+2. **PersonB - Female American Voice**
+   - Model: `tts_models/en/vctk/vits`
+   - Speaker ID: `p262`
+   - Accent: American English
+   - Characteristics: Natural, engaging female voice
+
+### Model Storage
+The TTS models are automatically downloaded and cached locally:
+- **macOS**: `~/Library/Application Support/tts`
+- **Windows**: `%LOCALAPPDATA%\tts`
+- **Linux**: `~/.cache/tts`
+
+Models are downloaded only once and work completely offline afterward.
+
+### Security & Updates
+- Models are downloaded securely through Coqui TTS's API
+- Downloads are verified for integrity
+- Models are cached locally for offline use
+- Updates can be forced by clearing the cache directory
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -96,27 +137,28 @@ Run static type checking with:
 poetry run mypy .
 ```
 
-## 🎙️ Voice Configuration
-
-The script leverages Coqui TTS for premium voice synthesis:
-
-- 🤖 Default model: `tts_models/en/ljspeech/tacotron2-DDC`
-- 💾 Models are automatically downloaded and cached locally
-- 🗣️ Different voices can be configured for each speaker
-
 ## ❓ Troubleshooting
 
 1. 📥 Model Download Issues:
-   - Check your internet connection during first run
-   - Models are cached at `~/Library/Application Support/tts` on macOS
+   - Ensure you have internet connection for the first run
+   - Models are downloaded from Coqui TTS's HuggingFace repository
+   - Each model is approximately 100MB
+   - Check your disk space (need ~200MB for both models)
+   - Models are cached at:
+     - macOS: `~/Library/Application Support/tts`
+     - Windows: `%LOCALAPPDATA%\tts`
+     - Linux: `~/.cache/tts`
 
 2. 🔊 Audio Quality Issues:
-   - Try using a different Coqui TTS model
+   - Try using a different speaker ID from the VCTK dataset
    - Adjust the synthesis parameters in the code
+   - Ensure the input text is properly formatted
+   - Check if the audio file is not corrupted
 
 3. 🔒 Permission Issues:
    - Ensure you have write permissions in the output directory
    - Check that the TTS cache directory is accessible
+   - Try running with elevated permissions if needed
 
 ## 🤝 Contributing
 
@@ -129,10 +171,18 @@ The script leverages Coqui TTS for premium voice synthesis:
 
 ## 📄 License
 
-[Add your license information here]
+This project is licensed under the MIT License.
+
+The VITS TTS model used in this project is licensed under the Apache 2.0 License.
+- **Model Author**: Eren @erogol (egolge@coqui.ai)
+- **Model Version**: v0.6.1
+- **Dataset**: VCTK (Voice Cloning Toolkit)
+- For more information about the model, visit the [Coqui TTS Models Repository](https://github.com/coqui-ai/TTS/blob/dev/TTS/.models.json)
 
 ---
 
 <div align="center">
 Made with ❤️ using Coqui TTS
+
+Powered by [🗣️ Coqui TTS](https://github.com/coqui-ai/TTS)
 </div>
