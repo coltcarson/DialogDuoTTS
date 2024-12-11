@@ -8,16 +8,25 @@ from pydub import AudioSegment
 class DialogueToSpeech:
     def __init__(self):
         """Initialize TTS with different voices"""
+        # Create models directory if it doesn't exist
+        models_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "models")
+        os.makedirs(models_dir, exist_ok=True)
+        
         # Initialize TTS engines for different voices
         print("\nInitializing Text-to-Speech...")
+        print(f"Models will be downloaded to: {models_dir}")
         print("This may take a moment to download the voice models on first run.")
         
         # Initialize male voice (VCTK model with p273 speaker - male British accent)
-        self.male_tts = TTS(model_name="tts_models/en/vctk/vits", progress_bar=True)
+        self.male_tts = TTS(model_name="tts_models/en/vctk/vits", 
+                           progress_bar=True,
+                           cache_dir=models_dir)
         self.male_speaker = "p273"  # VCTK male speaker
         
         # Initialize female voice (VCTK model with p262 speaker - female American accent)
-        self.female_tts = TTS(model_name="tts_models/en/vctk/vits", progress_bar=True)
+        self.female_tts = TTS(model_name="tts_models/en/vctk/vits",
+                             progress_bar=True,
+                             cache_dir=models_dir)
         self.female_speaker = "p262"  # VCTK female speaker
         
         # Create output directory if it doesn't exist
