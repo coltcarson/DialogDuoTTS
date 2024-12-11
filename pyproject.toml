@@ -10,6 +10,15 @@ python = ">=3.10,<3.12"
 pydub = "^0.25.1"
 TTS = "^0.22.0"
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+pre-commit = "^4.0.1"
+black = "^24.10.0"
+isort = "^5.13.2"
+flake8 = "^7.1.1"
+mypy = "^1.13.0"
+pylint = "^3.3.2"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
