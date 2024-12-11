@@ -78,6 +78,8 @@ Models are downloaded only once and work completely offline afterward.
 
 ## 📝 Usage
 
+### Basic Usage 🔰
+
 1. Create a conversation file in `data/conversation.txt` with the following format:
    ```
    PersonA: Hello, how are you?
@@ -92,19 +94,58 @@ Models are downloaded only once and work completely offline afterward.
 
 3. Find your generated audio files in the `output/` directory! 🎉
 
+### Command-Line Options 🛠️
+
+The script supports several command-line options for flexibility:
+
+```bash
+# Use a custom input file
+poetry run python main.py -i path/to/your/dialogue.txt
+
+# Show verbose output
+poetry run python main.py -v
+
+# Combine options
+poetry run python main.py -i custom_dialogue.txt -v
+```
+
+Available options:
+- `-i, --input`: Specify the input text file path (default: data/conversation.txt)
+- `-v, --verbose`: Show detailed output during processing
+
+### Example Workflows 📋
+
+1. **Using the Default Configuration** 🔄:
+   ```bash
+   poetry run python main.py
+   ```
+   This will process `data/conversation.txt` and create an audio file in the `output/` directory.
+
+2. **Processing a Custom Dialogue** 📝:
+   ```bash
+   poetry run python main.py -i data/project_podcast.txt
+   ```
+   This will process your custom dialogue file and create an audio file with a timestamp.
+
+3. **Debug Mode with Verbose Output** 🔍:
+   ```bash
+   poetry run python main.py -i custom_dialogue.txt -v
+   ```
+   This will show detailed information about the conversion process, useful for troubleshooting.
+
 ## 📂 Project Structure
 
 ```
 DialogDuoTTS/
-├── 📄 .pre-commit-config.yaml  # Pre-commit hook configuration
-├── 📄 .pylintrc               # Pylint configuration
-├── 📄 mypy.ini               # MyPy type checking configuration
-├── 📄 pyproject.toml         # Project dependencies and settings
-├── 🐍 main.py               # Main script for TTS conversion
-├── 📁 data/                 # Input dialogue files
-│   └── 📝 conversation.txt
-├── 📁 output/               # Generated audio files
-└── 🧪 tests/               # Test suite
+├── .pre-commit-config.yaml  # Pre-commit hook configuration
+├── .pylintrc               # Pylint configuration
+├── mypy.ini               # MyPy type checking configuration
+├── pyproject.toml         # Project dependencies and settings
+├── main.py               # Main script for TTS conversion
+├── data/                 # Input dialogue files
+│   └── conversation.txt
+├── output/               # Generated audio files
+└── tests/               # Test suite
     ├── __init__.py
     └── test_dialogue_to_speech.py
 ```
@@ -115,11 +156,11 @@ DialogDuoTTS/
 
 We use industry-standard tools to maintain high code quality:
 
-- ⚫ **black**: Code formatting
-- 🔄 **isort**: Import sorting
-- ✨ **flake8**: Style guide enforcement
-- 🔍 **mypy**: Static type checking
-- 🐛 **pylint**: Code analysis
+- **black**: Code formatting
+- **isort**: Import sorting
+- **flake8**: Style guide enforcement
+- **mypy**: Static type checking
+- **pylint**: Code analysis
 
 These tools run automatically as pre-commit hooks when you commit changes.
 
@@ -139,7 +180,7 @@ poetry run mypy .
 
 ## ❓ Troubleshooting
 
-1. 📥 Model Download Issues:
+1. Model Download Issues:
    - Ensure you have internet connection for the first run
    - Models are downloaded from Coqui TTS's HuggingFace repository
    - Each model is approximately 100MB
@@ -149,40 +190,33 @@ poetry run mypy .
      - Windows: `%LOCALAPPDATA%\tts`
      - Linux: `~/.cache/tts`
 
-2. 🔊 Audio Quality Issues:
+2. Audio Quality Issues:
    - Try using a different speaker ID from the VCTK dataset
    - Adjust the synthesis parameters in the code
    - Ensure the input text is properly formatted
    - Check if the audio file is not corrupted
 
-3. 🔒 Permission Issues:
+3. Permission Issues:
    - Ensure you have write permissions in the output directory
    - Check that the TTS cache directory is accessible
    - Try running with elevated permissions if needed
 
 ## 🤝 Contributing
 
-1. 🍴 Fork the repository
-2. 🌿 Create a feature branch
-3. ✍️ Make your changes
-4. 🧪 Run the test suite
-5. ✅ Ensure all pre-commit hooks pass
-6. 📤 Submit a pull request
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run the test suite
+5. Ensure all pre-commit hooks pass
+6. Submit a pull request
 
-## 📄 License
+## 📜 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-The VITS TTS model used in this project is licensed under the Apache 2.0 License.
-- **Model Author**: Eren @erogol (egolge@coqui.ai)
-- **Model Version**: v0.6.1
-- **Dataset**: VCTK (Voice Cloning Toolkit)
-- For more information about the model, visit the [Coqui TTS Models Repository](https://github.com/coqui-ai/TTS/blob/dev/TTS/.models.json)
+The project uses the Coqui TTS VITS model which is licensed under the Apache 2.0 License. For more information about the model license, visit the [Coqui TTS Models page](https://github.com/coqui-ai/TTS/blob/dev/TTS/.models.json).
 
 ---
 
 <div align="center">
 Made with ❤️ using Coqui TTS
-
-Powered by [🗣️ Coqui TTS](https://github.com/coqui-ai/TTS)
-</div>
