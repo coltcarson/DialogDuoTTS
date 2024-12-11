@@ -1,37 +1,23 @@
-# DialogDuoTTS
+# 🎭 DialogDuoTTS
 
-A Python-based text-to-speech application that converts two-person dialogues into conversations using offline TTS.
+> 🗣️ Transform text dialogues into lifelike conversations using state-of-the-art offline Text-to-Speech technology!
 
-## Features
+## ✨ Features
 
-- Works completely offline - no internet connection required
-- Uses high-quality offline TTS models for natural-sounding voices
-- Different voices for each speaker
-- Cross-platform support (Windows, macOS, Linux)
-- Automatic handling of conversation turn-taking with appropriate pauses
+- 🌐 Works completely offline using Coqui TTS for high-quality voice synthesis
+- 🎭 Different voices for each speaker in the dialogue
+- 💻 Cross-platform support (Windows, macOS, Linux)
+- ⚡ Automatic handling of conversation turn-taking with appropriate pauses
+- 🛡️ Type-checked and well-tested codebase with comprehensive quality checks
 
-## Prerequisites
+## 🚀 Getting Started
 
-- Python 3.10 or higher
-- Poetry (Python package manager)
-- espeak-ng (Text-to-Speech engine)
+### Prerequisites
 
-### Installing espeak-ng
+- 🐍 Python 3.10 or higher
+- 📦 Poetry (Python package manager)
 
-- **macOS**:
-  ```bash
-  brew install espeak
-  ```
-
-- **Linux**:
-  ```bash
-  sudo apt-get install espeak-ng
-  ```
-
-- **Windows**:
-  Download the installer from [espeak-ng releases](https://github.com/espeak-ng/espeak-ng/releases)
-
-## Installation
+### Installation
 
 1. Clone the repository:
    ```bash
@@ -44,7 +30,12 @@ A Python-based text-to-speech application that converts two-person dialogues int
    poetry install
    ```
 
-## Usage
+3. Set up pre-commit hooks:
+   ```bash
+   poetry run pre-commit install
+   ```
+
+## 📝 Usage
 
 1. Create a conversation file in `data/conversation.txt` with the following format:
    ```
@@ -58,36 +49,90 @@ A Python-based text-to-speech application that converts two-person dialogues int
    poetry run python main.py
    ```
 
-3. Find the generated audio file in `output/final_conversation.wav`
+3. Find your generated audio files in the `output/` directory! 🎉
 
-## Project Structure
+## 📂 Project Structure
 
-- `main.py`: Main script that handles TTS conversion
-- `data/conversation.txt`: Input dialogue file
-- `output/`: Directory for generated audio files
-- `pyproject.toml`: Project dependencies and configuration
+```
+DialogDuoTTS/
+├── 📄 .pre-commit-config.yaml  # Pre-commit hook configuration
+├── 📄 .pylintrc               # Pylint configuration
+├── 📄 mypy.ini               # MyPy type checking configuration
+├── 📄 pyproject.toml         # Project dependencies and settings
+├── 🐍 main.py               # Main script for TTS conversion
+├── 📁 data/                 # Input dialogue files
+│   └── 📝 conversation.txt
+├── 📁 output/               # Generated audio files
+└── 🧪 tests/               # Test suite
+    ├── __init__.py
+    └── test_dialogue_to_speech.py
+```
 
-## Voice Configuration
+## 👩‍💻 Development
 
-The script uses two different voices:
-- PersonA: US English, default pitch
-- PersonB: British English, slightly lower pitch
+### 🛠️ Code Quality Tools
 
-You can modify the voice settings in the `DialogueToSpeech.__init__` method:
-- `voice`: Language/accent (e.g., 'en-us', 'en-gb')
-- `pitch`: Voice pitch (0-99)
-- `speed`: Speaking rate in words per minute
+We use industry-standard tools to maintain high code quality:
 
-## Troubleshooting
+- ⚫ **black**: Code formatting
+- 🔄 **isort**: Import sorting
+- ✨ **flake8**: Style guide enforcement
+- 🔍 **mypy**: Static type checking
+- 🐛 **pylint**: Code analysis
 
-1. If you get an error about espeak-ng not being found:
-   - Make sure you've installed espeak-ng using the instructions above
-   - On Windows, ensure the espeak-ng installation directory is in your PATH
+These tools run automatically as pre-commit hooks when you commit changes.
 
-2. If the audio quality isn't satisfactory:
-   - Try adjusting the pitch and speed settings in the voice configuration
-   - Different voices may sound better for different types of text
+### 🧪 Running Tests
 
-3. If you get permission errors:
+Run the test suite using:
+```bash
+poetry run python -m unittest discover tests
+```
+
+### ✅ Type Checking
+
+Run static type checking with:
+```bash
+poetry run mypy .
+```
+
+## 🎙️ Voice Configuration
+
+The script leverages Coqui TTS for premium voice synthesis:
+
+- 🤖 Default model: `tts_models/en/ljspeech/tacotron2-DDC`
+- 💾 Models are automatically downloaded and cached locally
+- 🗣️ Different voices can be configured for each speaker
+
+## ❓ Troubleshooting
+
+1. 📥 Model Download Issues:
+   - Check your internet connection during first run
+   - Models are cached at `~/Library/Application Support/tts` on macOS
+
+2. 🔊 Audio Quality Issues:
+   - Try using a different Coqui TTS model
+   - Adjust the synthesis parameters in the code
+
+3. 🔒 Permission Issues:
    - Ensure you have write permissions in the output directory
-   - Try running the script with appropriate permissions
+   - Check that the TTS cache directory is accessible
+
+## 🤝 Contributing
+
+1. 🍴 Fork the repository
+2. 🌿 Create a feature branch
+3. ✍️ Make your changes
+4. 🧪 Run the test suite
+5. ✅ Ensure all pre-commit hooks pass
+6. 📤 Submit a pull request
+
+## 📄 License
+
+[Add your license information here]
+
+---
+
+<div align="center">
+Made with ❤️ using Coqui TTS
+</div>
