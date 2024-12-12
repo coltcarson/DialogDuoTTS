@@ -12,32 +12,32 @@
 
 ## 🎙️ Voice Models
 
-### Model Details
-- **Model Type**: VITS (Conditional Variational Autoencoder with Adversarial Learning)
-- **Dataset**: VCTK (Voice Cloning Toolkit)
-- **Model Size**: ~100MB per voice model
-- **Quality**: High-quality neural TTS with natural-sounding voices
-- **Language**: English (with British and American accents)
-- **Speakers**: 109 different speakers with various English accents
-- **License**: Apache 2.0
-- **Author**: Eren @erogol (egolge@coqui.ai)
-- **Model Version**: v0.6.1
-- **Source**: [Coqui TTS Models Repository](https://github.com/coqui-ai/TTS/blob/dev/TTS/.models.json)
+### 📊 Model Details
+- **🔍 Model Type**: VITS (Conditional Variational Autoencoder with Adversarial Learning)
+- **📚 Dataset**: VCTK (Voice Cloning Toolkit)
+- **📈 Model Size**: ~100MB per voice model
+- **🎯 Quality**: High-quality neural TTS with natural-sounding voices
+- **🇬🇧 Language**: English (with British and American accents)
+- **👥 Speakers**: 109 different speakers with various English accents
+- **📜 License**: Apache 2.0
+- **👨‍💻 Author**: Eren @erogol (egolge@coqui.ai)
+- **📈 Model Version**: v0.6.1
+- **🔗 Source**: [Coqui TTS Models Repository](https://github.com/coqui-ai/TTS/blob/dev/TTS/.models.json)
 
-### Included Voices
-1. **PersonA - Male British Voice**
+### 🎤 Included Voices
+1. **👨 PersonA - Male British Voice**
    - Model: `tts_models/en/vctk/vits`
    - Speaker ID: `p273`
    - Accent: British English
    - Characteristics: Clear, professional male voice
 
-2. **PersonB - Female American Voice**
+2. **👩 PersonB - Female American Voice**
    - Model: `tts_models/en/vctk/vits`
    - Speaker ID: `p262`
    - Accent: American English
    - Characteristics: Natural, engaging female voice
 
-### Model Storage
+### 🗂️ Model Storage
 The TTS models are automatically downloaded and cached locally:
 - **macOS**: `~/Library/Application Support/tts`
 - **Windows**: `%LOCALAPPDATA%\tts`
@@ -45,7 +45,7 @@ The TTS models are automatically downloaded and cached locally:
 
 Models are downloaded only once and work completely offline afterward.
 
-### Security & Updates
+### 🔒 Security & Updates
 - Models are downloaded securely through Coqui TTS's API
 - Downloads are verified for integrity
 - Models are cached locally for offline use
@@ -53,12 +53,35 @@ Models are downloaded only once and work completely offline afterward.
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### 🔧 Prerequisites
 
 - 🐍 Python 3.10 or higher
 - 📦 Poetry (Python package manager)
+- 🗣️ eSpeak NG (Required for Windows users)
 
-### Installation
+#### 🪟 Windows-specific Setup
+
+1. 📥 Install eSpeak NG:
+   - Download the latest version from [eSpeak NG Releases](https://github.com/espeak-ng/espeak-ng/releases)
+   - Run the installer and follow the installation steps
+
+2. 🛠️ Add eSpeak NG to System PATH:
+   - Press `Windows key + X` and select "System"
+   - Click on "Advanced system settings"
+   - Click the "Environment Variables" button
+   - Under "System Variables", find and select "Path"
+   - Click "Edit"
+   - Click "New"
+   - Add the path: `C:\Program Files\eSpeak NG` (or your installation directory)
+   - Click "OK" on all windows to save
+   - Restart any open terminals for the changes to take effect
+
+3. ✅ Verify Installation:
+   - Open a new terminal
+   - Run `espeak-ng --version`
+   - If you see the version number, eSpeak NG is properly installed
+
+### 📦 Installation
 
 1. Clone the repository:
    ```bash
@@ -76,9 +99,9 @@ Models are downloaded only once and work completely offline afterward.
    poetry run pre-commit install
    ```
 
-## 📝 Usage
+## 📚 Usage
 
-### Basic Usage 🔰
+### 📖 Basic Usage 
 
 1. Create a conversation file in `data/conversation.txt` with the following format:
    ```
@@ -92,9 +115,9 @@ Models are downloaded only once and work completely offline afterward.
    poetry run python main.py
    ```
 
-3. Find your generated audio files in the `output/` directory! 🎉
+3. Find your generated audio files in the `output/` directory! 
 
-### Command-Line Options 🛠️
+### 📝 Command-Line Options 
 
 The script supports several command-line options for flexibility:
 
@@ -113,27 +136,27 @@ Available options:
 - `-i, --input`: Specify the input text file path (default: data/conversation.txt)
 - `-v, --verbose`: Show detailed output during processing
 
-### Example Workflows 📋
+### 📚 Example Workflows 
 
-1. **Using the Default Configuration** 🔄:
+1. **Using the Default Configuration** :
    ```bash
    poetry run python main.py
    ```
    This will process `data/conversation.txt` and create an audio file in the `output/` directory.
 
-2. **Processing a Custom Dialogue** 📝:
+2. **Processing a Custom Dialogue** :
    ```bash
    poetry run python main.py -i data/project_podcast.txt
    ```
    This will process your custom dialogue file and create an audio file with a timestamp.
 
-3. **Debug Mode with Verbose Output** 🔍:
+3. **Debug Mode with Verbose Output** :
    ```bash
    poetry run python main.py -i custom_dialogue.txt -v
    ```
    This will show detailed information about the conversion process, useful for troubleshooting.
 
-## 📂 Project Structure
+## 🗂️ Project Structure
 
 ```
 DialogDuoTTS/
@@ -150,7 +173,7 @@ DialogDuoTTS/
     └── test_dialogue_to_speech.py
 ```
 
-## 👩‍💻 Development
+## 🔧 Development
 
 ### 🛠️ Code Quality Tools
 
@@ -164,21 +187,21 @@ We use industry-standard tools to maintain high code quality:
 
 These tools run automatically as pre-commit hooks when you commit changes.
 
-### 🧪 Running Tests
+### 📊 Running Tests
 
 Run the test suite using:
 ```bash
 poetry run python -m unittest discover tests
 ```
 
-### ✅ Type Checking
+### 🔍 Type Checking
 
 Run static type checking with:
 ```bash
 poetry run mypy .
 ```
 
-## ❓ Troubleshooting
+## 🚨 Troubleshooting
 
 1. Model Download Issues:
    - Ensure you have internet connection for the first run
