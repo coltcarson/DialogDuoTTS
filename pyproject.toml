@@ -10,6 +10,7 @@ python = ">=3.10,<3.12"
 pydub = "^0.25.1"
 TTS = "^0.22.0"
 torch = ">=2.0.0"
+setuptools = ">=89.0.0"  # Added to fix CVE-2025-47273 (path traversal vulnerability)
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"
